@@ -1,0 +1,11 @@
+# Architecture
+
+The app reuses Shelter's GPL-3.0 DPC, managed-profile provisioning, app catalog and `IShelterService` freeze/unfreeze API. The public `CalculatorLauncher` activity alias is the only launcher entry and has no HOME category. The Work Profile DPC disables that alias for its own Android user at startup; it does not hide the DPC package or affect the Personal user.
+
+The calculator implements local decimal arithmetic. A six-digit numeric entry followed by `=` is verified by the existing Argon2id vault. Setup enrolls the first PIN before starting Shelter's setup wizard. The verifier uses a per-install random salt; preference storage contains only the encoded Argon2id verifier and retry delay state. PIN input is not saved in view state, task previews are protected, and calculations or PINs are not sent to logs, analytics, or a network service. Failed attempts receive the vault's bounded retry delay. Authorization is a process-local, generation-checked session which clears on screen-off and process death.
+
+The Light/Dark control persists the theme then invokes Shelter's `PUBLIC_FREEZE_ALL` intent, forwarded to the Work Profile `DummyActivity`. That profile enumerates installed, not-yet-hidden apps: all installed user apps and installed system apps with a launcher activity. It skips the Shelter package, hidden apps, and headless system services. Each eligible app is frozen through the existing `DevicePolicyManager.setApplicationHidden` path. Platform rejections are caught per package and reported after the rest of the batch. The request never unfreezes an app.
+
+`MainActivity` checks the process-local PIN session at entry and resume. Unfreezing remains in Shelter's authenticated app list through `IShelterService.unfreezeApp`. Legacy public unfreeze shortcuts are disabled and removed from the UI and intent allowlist. Screen lock clears authorization; the next return to Shelter requires a new PIN entry. No notification action unlocks the profile.
+
+The calculator UI and DPC keep using the same package name across Android users so Android can provision the Work copy. The calculator arithmetic has no imported source or runtime library. The included Setup Wizard Library retains its own license.
