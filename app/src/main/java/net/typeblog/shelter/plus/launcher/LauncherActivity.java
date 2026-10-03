@@ -141,7 +141,7 @@ public class LauncherActivity extends AppCompatActivity {
                 boolean ok = new PinVault(getApplicationContext()).verify(pin);
                 runOnUiThread(() -> {
                     checkingPin = false;
-                    if (ok && PrivateSession.authorize(attempt)) {
+                    if (ok && PrivateSession.authorize(attempt, android.os.SystemClock.elapsedRealtime())) {
                         startActivity(new Intent(this, MainActivity.class));
                     } else {
                         Toast.makeText(this, "Invalid entry", Toast.LENGTH_SHORT).show();
@@ -194,7 +194,7 @@ public class LauncherActivity extends AppCompatActivity {
                 catch (RuntimeException error) { Arrays.fill(secret, '\0'); saved = false; }
                 boolean result = saved;
                 runOnUiThread(() -> {
-                    if (result && PrivateSession.authorize(attempt)) {
+                    if (result && PrivateSession.authorize(attempt, android.os.SystemClock.elapsedRealtime())) {
                         dialog.dismiss();
                         startActivity(new Intent(this, MainActivity.class));
                     } else {

@@ -183,7 +183,7 @@ public class DummyActivity extends Activity {
             actionFinalizeProvision();
         } else if (UNFREEZE_AND_LAUNCH.equals(intent.getAction())) {
             // The work-profile leg is accepted only from the authenticated, signature-checked parent flow.
-            if (!mIsProfileOwner && !PrivateSession.isAuthorized()) finish();
+            if (!mIsProfileOwner && !PrivateSession.isAuthorized(android.os.SystemClock.elapsedRealtime())) finish();
             else actionUnfreezeAndLaunch();
         } else if (PUBLIC_FREEZE_ALL.equals(intent.getAction())) {
             actionPublicFreezeAll();

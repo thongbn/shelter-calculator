@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);
-        if (!PrivateSession.isAuthorized()) {
+        if (!PrivateSession.isAuthorized(android.os.SystemClock.elapsedRealtime())) {
             finish();
             return;
         }
@@ -306,7 +306,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!PrivateSession.isAuthorized() && !getSystemService(DevicePolicyManager.class).isProfileOwnerApp(getPackageName())) {
+        if (!PrivateSession.isAuthorized(android.os.SystemClock.elapsedRealtime())
+                && !getSystemService(DevicePolicyManager.class).isProfileOwnerApp(getPackageName())) {
             Intent calculator = new Intent(this, LauncherActivity.class);
             calculator.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(calculator);

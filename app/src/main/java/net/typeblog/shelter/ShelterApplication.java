@@ -1,12 +1,14 @@
 package net.typeblog.shelter;
 
 import android.app.Application;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.IntentFilter;
 import android.app.admin.DevicePolicyManager;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 
 import net.typeblog.shelter.services.FileShuttleService;
 import net.typeblog.shelter.plus.launcher.PrivateSession;
@@ -15,7 +17,7 @@ import net.typeblog.shelter.services.ShelterService;
 import net.typeblog.shelter.util.LocalStorageManager;
 import net.typeblog.shelter.util.SettingsManager;
 
-public class ShelterApplication extends Application {
+public class ShelterApplication extends Application implements Application.ActivityLifecycleCallbacks {
     private ServiceConnection mShelterServiceConnection = null;
     private ServiceConnection mFileShuttleServiceConnection = null;
 
@@ -37,7 +39,22 @@ public class ShelterApplication extends Application {
         IntentFilter screenOff = new IntentFilter(Intent.ACTION_SCREEN_OFF);
         if (android.os.Build.VERSION.SDK_INT >= 33) registerReceiver(screenLockReceiver, screenOff, Context.RECEIVER_NOT_EXPORTED);
         else registerReceiver(screenLockReceiver, screenOff);
+        registerActivityLifecycleCallbacks(this);
     }
+
+    @Override public void onActivityStarted(Activity activity) {
+        PrivateSession.onActivityStarted(android.os.SystemClock.elapsedRealtime());
+    }
+
+    @Override public void onActivityStopped(Activity activity) {
+        PrivateSession.onActivityStopped(android.os.SystemClock.elapsedRealtime(), activity.isChangingConfigurations());
+    }
+
+    @Override public void onActivityCreated(Activity activity, Bundle state) { }
+    @Override public void onActivityResumed(Activity activity) { }
+    @Override public void onActivityPaused(Activity activity) { }
+    @Override public void onActivitySaveInstanceState(Activity activity, Bundle state) { }
+    @Override public void onActivityDestroyed(Activity activity) { }
 
 
     public void bindShelterService(ServiceConnection conn, boolean foreground) {
