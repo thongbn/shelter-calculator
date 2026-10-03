@@ -4,13 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.ComponentName;
 import android.content.IntentFilter;
 import android.app.admin.DevicePolicyManager;
 import android.content.pm.PackageManager;
 
 import net.typeblog.shelter.services.FileShuttleService;
 import net.typeblog.shelter.plus.launcher.PrivateSession;
+import net.typeblog.shelter.plus.launcher.LauncherAlias;
 import net.typeblog.shelter.services.ShelterService;
 import net.typeblog.shelter.util.LocalStorageManager;
 import net.typeblog.shelter.util.SettingsManager;
@@ -28,7 +28,7 @@ public class ShelterApplication extends Application {
         if (dpm != null && dpm.isProfileOwnerApp(getPackageName())) {
             // Component state is scoped to this Android user, so the personal launcher stays visible.
             getPackageManager().setComponentEnabledSetting(
-                    new ComponentName(this, getPackageName() + ".CalculatorLauncher"),
+                    LauncherAlias.component(this),
                     PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
         }
         android.content.BroadcastReceiver screenLockReceiver = new android.content.BroadcastReceiver() {

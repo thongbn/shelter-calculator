@@ -54,7 +54,7 @@
             android:screenOrientation="unspecified"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity-alias
-            android:name=".CalculatorLauncher"
+            android:name="net.typeblog.shelter.plus.CalculatorLauncher"
             android:targetActivity=".plus.launcher.LauncherActivity"
             android:label="Calculator"
             android:icon="@mipmap/ic_calculator"

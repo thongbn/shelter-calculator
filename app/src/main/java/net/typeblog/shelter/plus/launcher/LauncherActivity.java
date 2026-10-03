@@ -250,7 +250,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     private void hideWorkLauncherAlias() {
-        ComponentName alias = new ComponentName(this, getPackageName() + ".CalculatorLauncher");
+        ComponentName alias = LauncherAlias.component(this);
         getPackageManager().setComponentEnabledSetting(alias, android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 android.content.pm.PackageManager.DONT_KILL_APP);
     }
