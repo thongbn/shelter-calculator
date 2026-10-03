@@ -9,13 +9,13 @@ import static org.junit.Assert.assertTrue;
 public class PrivateSessionTest {
     @After public void clear() { PrivateSession.clear(); }
 
-    @Test public void requiresCurrentVerifiedAttemptAndClearsOnLock() {
+    @Test public void lockRevokesSessionAndInvalidatesPendingAttempt() {
         assertFalse(PrivateSession.isAuthorized(0));
         long attempt = PrivateSession.beginAttempt();
         assertTrue(PrivateSession.authorize(attempt, 0));
         assertTrue(PrivateSession.isAuthorized(0));
         long staleAttempt = PrivateSession.beginAttempt();
-        PrivateSession.clear();
+        PrivateSession.lock();
         assertFalse(PrivateSession.isAuthorized(0));
         assertFalse(PrivateSession.authorize(staleAttempt, 0));
     }

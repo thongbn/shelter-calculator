@@ -2,6 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/main_menu_lock_session"
+        android:icon="@drawable/ic_lock_session_24dp"
+        android:title="@string/lock_session"
+        android:contentDescription="@string/lock_session"
+        app:showAsAction="always|withText" />
+
+    <item
         android:id="@+id/main_menu_search"
         android:icon="@drawable/ic_search_tinted_24dp"
         android:title="@string/search"

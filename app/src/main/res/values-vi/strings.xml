@@ -47,6 +47,7 @@
     <string name="unfreeze_and_launch">Huỷ đóng băng và Chạy</string>
     <string name="auto_freeze">Tự động đóng băng</string>
     <string name="search">Tìm kiếm</string>
+    <string name="lock_session">Khóa phiên</string>
     <string name="freeze_all">Đóng băng hàng loạt</string>
     <string name="create_freeze_all_shortcut">Tạo lối tắt Đóng băng hàng loạt</string>
     <string name="freeze_all_shortcut">Đóng băng</string>

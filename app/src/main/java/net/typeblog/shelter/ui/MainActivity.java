@@ -418,6 +418,13 @@ public class MainActivity extends AppCompatActivity {
             settingsIntent.putExtra("extras", extras);
             startActivity(settingsIntent);
             return true;
+        } else if (itemId == R.id.main_menu_lock_session) {
+            PrivateSession.lock();
+            Intent calculator = new Intent(this, LauncherActivity.class);
+            calculator.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(calculator);
+            finish();
+            return true;
         } else if (itemId == R.id.main_menu_install_app_to_profile) {
             mSelectApk.launch(null);
             return true;

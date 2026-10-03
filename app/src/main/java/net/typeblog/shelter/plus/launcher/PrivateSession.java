@@ -47,6 +47,11 @@ public final class PrivateSession {
         generation++;
     }
 
+    /** Revoke the current session and invalidate any in-flight PIN authorization attempt. */
+    public static synchronized void lock() {
+        clear();
+    }
+
     private static void expireIfNeeded(long nowMs) {
         if (authorized && backgroundedAtMs != NO_BACKGROUND_TIME
                 && nowMs - backgroundedAtMs >= BACKGROUND_TIMEOUT_MS) {
