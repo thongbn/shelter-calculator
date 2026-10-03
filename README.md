@@ -14,7 +14,7 @@ Use JDK 17 and Android SDK platform/build tools 35:
 ./gradlew assembleDebug testDebugUnitTest lintDebug
 ```
 
-Android 14 provisioning, reboot behavior, and E-Ink rendering need device validation. See [architecture](docs/ARCHITECTURE.md) and [build/device checks](docs/BUILDING.md).
+At this revision, 15 JVM unit tests pass. Lint reports 89 warnings and no fatal findings; these include legacy Shelter source, translations, and resources. Android 14 provisioning, reboot behavior, and E-Ink rendering need device validation. See [architecture](docs/ARCHITECTURE.md) and [build/device checks](docs/BUILDING.md).
 
 ## Source and licenses
 
